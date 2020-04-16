@@ -5,5 +5,5 @@ module.exports = (app) => {
     app.post('/create', crud.postAddUser);
     app.get('/update/:user', crud.getUpdateUser);
     app.post('/update/:user', crud.postUpdateUser);
-    app.delete('/update/:user', crud.postUpdateUser);
+    app.get('/delete/:user', crud.deleteUser);
 }

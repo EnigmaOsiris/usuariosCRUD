@@ -27,8 +27,9 @@ html(lang="es")
                             td= reg.nombre
                             td= reg.apellidos
                             td= reg.rol
-                            td= reg.email
+                            td= reg.correo
                             td
-                                button.btn.btn-sm.btn-warning Editar
-                                button.btn.btn-sm.btn-danger Eliminar
+                                a.btn.btn-sm.btn-warning(href=`/update/${reg._id}`) Editar
+                                a.btn.btn-sm.btn-danger(href=`/delete/${reg._id}`) Eliminar
+                                
             hr

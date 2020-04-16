@@ -44,7 +44,8 @@ module.exports = {
                 nombre: data.name,
                 apellidos: data.lastName,
                 password: data.password,
-                correo: data.correo,
+                correo: data.email,
+                rol: data.rol
             });
             let nUser = await user.save();
             console.log('created user')
@@ -59,45 +60,71 @@ module.exports = {
     },
     getUpdateUser: async(req, res) => {
         let result = {};
+        result.rols = [
+            'Administrador',
+            'Operador',
+            'Administrativo'
+        ];
         try {
             const id = req.params.user;
             result.status = 200;
-            result.user = await User.find({ _id: id });
+            console.log('Before get user');
+            result.user = await User.findById(id);
+            console.log('after get user');
         } catch (error) {
             result.status = 500;
-            result.rols = null;
             result.error = error;
         }
         res.render('update', { result: result });
     },
     postUpdateUser: async(req, res) => {
-
+        let result = {};
+        result.rols = [
+            'Administrador',
+            'Operador',
+            'Administrativo'
+        ];
         try {
             const id = req.params.user;
             let data = req.body;
-
-            const userNick = await User.findOne({ nick: data.nick });
-
-            if (user) {
-                throw `El nick ${data.nick} ya esta en uso!`;
-            }
-
+            console.log('DTA: ', data);
+            console.log('before cehck nik updae');            
+            console.log('after check nik update');
             const user = new User({
                 nick: data.nick,
                 nombre: data.name,
                 apellidos: data.lastName,
                 password: data.password,
-                correo: data.correo,
+                correo: data.email,
+                rol: data.rol
             });
-            let nUser = await User.findOneAndUpdate({ _id: id }, user);
-            result.status = 200;
-            result.user = nUser;
+            console.log('Before update');            
+            User.findOneAndUpdate({ _id: id }, {
+                    nick: data.nick,
+                    nombre: data.name,
+                    apellidos: data.lastName,
+                    password: data.password,
+                    correo: data.email,
+                    rol: data.rol
+                },
+                (err, period) => {
+                    if (err) {
+                        console.log('Error');
+                    }
+                    res.redirect('/');
+                }
+            );
+            console.log('afeter update');
+            result.status = 201;
+
         } catch (error) {
             result.status = 500;
             result.user = null;
             result.error = error;
+            console.error(error);
+            res.render('update', { result: result });
         }
-        res.render('update', { result: result });
+
     },
     deleteUser: async(req, res) => {
         try {
@@ -106,6 +133,7 @@ module.exports = {
         } catch (error) {
 
         }
-        res.render('index', { result: result });
+        let users = await User.find({});
+        res.render('index', { users: users });
     }
 };
