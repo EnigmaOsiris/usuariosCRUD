@@ -24,16 +24,21 @@ module.exports = {
         res.render('create', { result: result });
     },
     postAddUser: async(req, res) => {
-
+        let result = {};
+        result.rols = [
+            'Administrador',
+            'Operador',
+            'Administrativo'
+        ];
         try {
             let data = req.body;
             console.log('Data in server: ', data);
             const userNick = await User.findOne({ nick: data.nick });
-
-            if (user) {
+            console.log('after check nik')
+            if (userNick) {
                 throw `El nick ${data.nick} ya esta en uso!`;
             }
-
+            console.log('to create user')
             const user = new User({
                 nick: data.nick,
                 nombre: data.name,
@@ -42,6 +47,7 @@ module.exports = {
                 correo: data.correo,
             });
             let nUser = await user.save();
+            console.log('created user')
             result.status = 201;
             result.user = nUser;
         } catch (error) {
