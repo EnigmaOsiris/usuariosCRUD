@@ -3,7 +3,7 @@ const Rol = require('./../models/rol');
 module.exports = {
     get: async(req, res) => {
         let users = await User.find({});
-        res.render('index', { users: usr });
+        res.render('index', { users: users });
     },
     getAddUser: async(req, res) => {
         let result = {};
@@ -27,7 +27,7 @@ module.exports = {
 
         try {
             let data = req.body;
-
+            console.log('Data in server: ', data);
             const userNick = await User.findOne({ nick: data.nick });
 
             if (user) {
@@ -42,7 +42,7 @@ module.exports = {
                 correo: data.correo,
             });
             let nUser = await user.save();
-            result.status = 200;
+            result.status = 201;
             result.user = nUser;
         } catch (error) {
             result.status = 500;
@@ -94,6 +94,12 @@ module.exports = {
         res.render('update', { result: result });
     },
     deleteUser: async(req, res) => {
+        try {
+            const id = req.params.user;
+            await User.deleteOne({ _id: id });
+        } catch (error) {
 
+        }
+        res.render('index', { result: result });
     }
 };

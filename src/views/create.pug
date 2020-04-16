@@ -12,26 +12,30 @@ html(lang="es")
                 hr
                 div.alert.alert-danger=result.error
                 hr
+            if result && result.status === 201
+                hr
+                div.alert.alert-info Usuario Registrado
+                hr
             form(method="POST" action='/create')
-            div.form-group
-                label(for="nick") Nick:
-                input#nick.form-control(type='text',  name='nick' required pattern="")
-            div.form-group
-                label(for="name") Name(s):
-                input#name.form-control(type='text',  name='name' required)
-            div.form-group
-                label(for="lastName") Last Name(s):
-                input#lastName.form-control(type='text',  name='lastName')
-            div.form-group
-                label(for="password") Password:
-                input#password.form-control(type='password',  name='password' required)
-            div.form-group
-                label(for="rol") Rol:
-                select(name="rol",id='rol')
-                    each rol in result.rols
-                        option=rol
-            div.form-group
-                label(for="correo") Email:
-                input#correo.form-control(type='email',  name='email' required)  
+                div.form-group
+                    label(for="nick") Nick:
+                    input#nick.form-control(type='text',  name='nick' required )
+                div.form-group
+                    label(for="name") Name(s):
+                    input#name.form-control(type='text',  name='name' required)
+                div.form-group
+                    label(for="lastName") Last Name(s):
+                    input#lastName.form-control(type='text',  name='lastName')
+                div.form-group
+                    label(for="password") Password:
+                    input#password.form-control(type='password',  name='password' required)
+                div.form-group
+                    label(for="rol") Rol:
+                    select(name="rol",id='rol')
+                        each rol in result.rols
+                            option=rol
+                div.form-group
+                    label(for="correo") Email:
+                    input#correo.form-control(type='email',  name='email' required)  
 
-            button.btn.btn-primary(type='submit') Sign up  
+                button.btn.btn-primary(type='submit') Sign up  

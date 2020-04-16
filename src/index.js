@@ -11,9 +11,7 @@ const cookieParser = require('cookie-parser');
 
 //const { url } = require('./config/db');
 
-mongooose.connect('mongodb://localhost/crud', {
-    useNewUrlParser: true
-});
+mongooose.connect('mongodb://localhost:27017/crud', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('port', process.env.POR || 3050);
 app.set('views', path.join(__dirname, 'views'));
