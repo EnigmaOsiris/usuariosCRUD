@@ -1,0 +1,33 @@
+doctype 5
+html(lang="es")
+ head
+  title Listado de usuarios
+  link(rel="stylesheet", href="css/bootstrap.css")
+ body
+  div.conatiner
+    div.row
+        div.col-12
+            h1.text-primary Registrar usuario
+            form(method="POST" action='/update')
+            div.form-group
+                label(for="nick") Nick:
+                input#nick.form-control(type='text',  name='nick' required pattern="" value=result.user.nick)
+            div.form-group
+                label(for="name") Name(s):
+                input#name.form-control(type='text',  name='name' required value=result.user.nombre)
+            div.form-group
+                label(for="lastName") Last Name(s):
+                input#lastName.form-control(type='text',  name='lastName' value=result.user.apellidos)
+            div.form-group
+                label(for="password") Password:
+                input#password.form-control(type='password',  name='password' required value=result.user.password)
+            div.form-group
+                label(for="rol") Rol:
+                select(name="rol",id='rol' value=result.user.rol)
+                    each rol in results.user.rols
+                        option=rol
+            div.form-group
+                label(for="correo") Email:
+                input#correo.form-control(type='email',  name='email' required value=result.user.correo )  
+
+            button.btn.btn-primary(type='submit') Sign up  
